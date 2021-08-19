@@ -21,9 +21,10 @@ public class EpamTest extends BaseHook {
     public void featureEventsTest() {
 
         new MainPage()
+                .header
                 .getEventsPage()
                 .getEventsList()
-                .shouldHaveSize(Integer.parseInt(EventsPage.getEventsCount().getText()));
+                .shouldHaveSize(EventsPage.getEventsCount());
 
     }
 }

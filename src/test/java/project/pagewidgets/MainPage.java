@@ -7,17 +7,13 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class MainPage extends BasePage {
 
-    SelenideElement eventsButton = $x("//li[@class='nav-item events-icon']");
-
     public MainPage() {
+        super();
         Selenide.open("");
         logger.info("Открыта главная страница");
     }
 
-    public EventsPage getEventsPage() {
-        eventsButton.click();
-        return new EventsPage();
-    }
+
 
 
 
