@@ -1,25 +1,29 @@
 package project;
-
-import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import project.pagewidgets.EventsPage;
+import project.pagewidgets.MainPage;
+
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 
 public class EpamTest extends BaseHook {
 
-    SelenideElement eventsButton = $x("//li[@class='nav-item events-icon']");
 
     @BeforeEach
     public void setUp() {
-        open("/");
+        //open("/");
     }
 
     @Test
-    public void test() {
+    public void featureEventsTest() {
 
-        eventsButton.shouldBe(Condition.visible);
+        new MainPage()
+                .getEventsPage()
+                .getEventsList()
+                .shouldHaveSize(Integer.parseInt(EventsPage.getEventsCount().getText()));
 
     }
 }
