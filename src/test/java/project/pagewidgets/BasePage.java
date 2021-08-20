@@ -33,14 +33,12 @@ public class BasePage {
     private By logo = By.xpath(".//a[@class='evnt-brand-logo']");
     private By login = By.xpath(".//a[contains(text(), 'Login')]");
 
-
-    @Step("Открытие страницы мероприятий")
+    @Step("Пользователь переходит на вкладку events")
     public EventsPage getEventsPage() {
         this.header.$(events).click();
         logger.info("Страница мероприятий открыта");
         return new EventsPage();
     }
-
 
     @Step("Сохранение скриншота")
     public void takeScreenshotForAllure(String description) {

@@ -3,11 +3,9 @@ package project;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import project.pagewidgets.EventsPage;
 import project.pagewidgets.MainPage;
 
 
@@ -28,7 +26,21 @@ public class EpamTest extends BaseHook {
 
         new MainPage()
                 .getEventsPage()
-                .isEventsCountCorrect();
+                .checkVisabilityOfEventsCards()
+                .isEventsNumberEqualsCounter();
 
     }
+
+//    @Description("Проверка информации на карточках прошедших мероприятий мероприятий")
+//    @DisplayName("Просмотр карточек мероприятий")
+//    @Test
+//    public void eventsCardsTest() {
+//
+//        new MainPage()
+//                .getEventsPage()
+//                .getPastEvents();
+//
+//    }
+
+
 }
