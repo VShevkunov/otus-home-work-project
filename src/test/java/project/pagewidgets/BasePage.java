@@ -18,8 +18,10 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import java.io.ByteArrayInputStream;
+import java.time.Duration;
 import java.util.Base64;
 
+import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class BasePage {
@@ -39,6 +41,10 @@ public class BasePage {
         logger.info("Страница мероприятий открыта");
         return new EventsPage();
     }
+
+
+
+
 
     @Step("Сохранение скриншота")
     public void takeScreenshotForAllure(String description) {
