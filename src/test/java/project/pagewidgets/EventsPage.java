@@ -9,23 +9,30 @@ import org.openqa.selenium.By;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.CollectionCondition.size;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.matchText;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class EventsPage extends BasePage {
+
+    SelenideElement currentEventsCategory = $x("//a[@class='evnt-tab-link nav-link active']");
 
     ElementsCollection eventsList = $x("//div[@class='evnt-cards-container']").$$x(".//div[@class='evnt-card-wrapper']");
     By eventDate = By.xpath(".//div[@class='evnt-dates-cell dates']//span");
     By eventName = By.xpath(".//div[@class='evnt-event-name']//span");
 
-    SelenideElement currentEventsCategory = $x("//a[@class='evnt-tab-link nav-link active']");
+    SelenideElement filtersHeading = $x("//div[@class='evnt-filters-heading']");
+    By filterByLocation = By.xpath(".//span[contains(text(), 'Location')]");
+
+    SelenideElement eventCardLoader = $x("//div[@class='evnt-loader']");
+
 
     public EventsPage(){
         super();
@@ -34,18 +41,19 @@ public class EventsPage extends BasePage {
     @Step("На странице отображаются карточки мероприятий")
     public EventsPage checkVisabilityOfEventsCards() {
         eventsList.first().shouldBe(visible);
-        //int visible = eventsList.filter(Condition.visible).shouldBe(sizeGreaterThan(0)).size();
-        logger.info("Отбразились карточки мероприятий");//, visible);
-        Allure.addAttachment("Мероприятий", ""+eventsList.size());
+        logger.info("Отбразились карточки мероприятий");
         takeScreenshotForAllure("Карточки мероприятий");
         return this;
     }
 
-    @Step("Количество карточек равно счетчику на кнопке Upcoming Events")
-    public void isEventsNumberEqualsCounter() {
+    @Step("Количество карточек равно счетчику на кнопке Events")
+    public EventsPage isEventsNumberEqualsCounter() {
         eventsList
                 .shouldHave(size(
                         Integer.parseInt(currentEventsCategory.$x(".//span[3]").getText())));
+        logger.info("Всего {} карточек", eventsList.size());
+        Allure.addAttachment("Всего карточек", ""+eventsList.size());
+        return this;
     }
 
     @Step("Пользователь нажимает на Past Events")
@@ -96,23 +104,35 @@ public class EventsPage extends BasePage {
         return this;
     }
 
-    public EventsPage validateAllUpcomingEventsDates() {
+    @Step("Даты мероприятий в рамках категорий валидны относительно текущей даты")
+    public EventsPage validateAllEventsDates(EventTimeType eventTimeType) {
         for (SelenideElement event : eventsList){
-            eventDateValidation(event.$(eventDate).getText(), EventTimeType.FUTURE);
+            eventDateValidation(event.$(eventDate).getText(), eventTimeType);
             logger.info("Мероприятие " + event.$(eventName).getText() + " имеет вадидную дату");
         }
+        return this;
+    }
+
+    @Step("Пользователь нажимает на Location в блоке фильтров и выбирает Canada в выпадающем списке")
+    public EventsPage filterEventLocation(String location) {
+
+        filtersHeading.$(filterByLocation).click();
+        filtersHeading.$x(".//label[@data-value='" + location + "']").click();
+        waitLoader();
+        logger.info("Выбрано {} в фильтре Locations", location);
 
         return this;
     }
 
 
 
+
+
     public void eventDateValidation(String date, EventTimeType switcher) {
 
         String d = date.trim(); //лишние пробелы за ошибку не считаем
-        String year = d.substring(d.length()-4); // заимствование года и месяца для перовой даты
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", new Locale("us", "US"));
+        Locale US = new Locale("us", "US"); //US Locale на сайте
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", US); //паттерн даты на сайте
         formatter.setLenient(false); //не пропускать невалидные даты
 
         Date currentDate = null;     //текущая дата без времени 00:00:00 MSK
@@ -125,7 +145,10 @@ public class EventsPage extends BasePage {
             currentDate = formatter.parse(formatter.format(new Date()));
             lastDate = formatter.parse(dates.get(dates.size()-1));
             if (dates.size()>1) {
-                beginDate = formatter.parse(dates.get(0) + " " + year);
+                beginDate =
+                        dates.get(0).length()<=2 ?
+                                formatter.parse(dates.get(0) + " " + new SimpleDateFormat("MMM", US).format(lastDate) + " " + new SimpleDateFormat("yyyy", US).format(lastDate)) :
+                                formatter.parse(dates.get(0) + " " + new SimpleDateFormat("yyyy", US).format(lastDate));
                 Assertions.assertTrue(
                         beginDate.before(lastDate), "Ошибка в диапазоне дат мероприятия"
                 );
@@ -144,21 +167,8 @@ public class EventsPage extends BasePage {
             break;
         }
 
-
-
     }
 
-
-
-
-
-
-
-
-    public EventsPage waitLoader() {
-        $x("//div[@class='evnt-global-loader']").shouldBe(disappear, Duration.ofSeconds(10));
-        return this;
-    }
 
 
 

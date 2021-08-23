@@ -2,13 +2,6 @@ package project.pagewidgets;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
-import org.junit.jupiter.api.Test;
-
-import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +12,6 @@ import org.openqa.selenium.TakesScreenshot;
 
 import java.io.ByteArrayInputStream;
 import java.time.Duration;
-import java.util.Base64;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Selenide.$x;
@@ -38,18 +30,27 @@ public class BasePage {
     @Step("Пользователь переходит на вкладку events")
     public EventsPage getEventsPage() {
         this.header.$(events).click();
+        waitLoader();
         logger.info("Страница мероприятий открыта");
         return new EventsPage();
     }
 
-
-
-
+    @Step("Пользователь переходит на вкладку VIDEO - TALKS LIBRARY")
+    public VideoPage getVideoPage() {
+        this.header.$(video).click();
+        waitLoader();
+        logger.info("Страница VIDEO - TALKS LIBRARY открыта");
+        return new VideoPage();
+    }
 
     @Step("Сохранение скриншота")
     public void takeScreenshotForAllure(String description) {
         Allure.addAttachment(description, new ByteArrayInputStream(((TakesScreenshot) WebDriverRunner.getWebDriver())
                 .getScreenshotAs(OutputType.BYTES)));
+    }
+
+    public void waitLoader() {
+        $x("//div[@class='evnt-global-loader']").shouldBe(disappear, Duration.ofSeconds(10));
     }
 
 

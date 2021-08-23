@@ -3,16 +3,11 @@ package project;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import project.pagewidgets.EventTimeType;
 import project.pagewidgets.MainPage;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 
 @Epic("Тесты проектной работы OTUS")
@@ -56,7 +51,7 @@ public class EpamTest extends BaseHook {
                 .getEventsPage()
                 .getUpcomingEvents()
                 .checkVisabilityOfEventsCards()
-                .validateAllUpcomingEventsDates();
+                .validateAllEventsDates(EventTimeType.FUTURE);
 
     }
 
@@ -65,9 +60,48 @@ public class EpamTest extends BaseHook {
     @Test
     public void pastEventsInCanadaCheck() {
 
-
+        new MainPage()
+                .getEventsPage()
+                .getPastEvents()
+                .filterEventLocation("Canada")
+                .checkVisabilityOfEventsCards()
+                .isEventsNumberEqualsCounter()
+                .validateAllEventsDates(EventTimeType.PAST);
 
     }
+
+    @Description("Фильтрация докладов по категориям")
+    @DisplayName("Фильтрация докладов по категориям")
+    @Test
+    public void filteringLecturesByCategory() {
+
+        new MainPage()
+                .getVideoPage()
+                .getMoreFilters()
+                .filterBy("Category", "Testing")
+                .filterBy("Location", "Belarus")
+                .filterBy("Language", "ENGLISH")
+                .cardsClickedValidation("Testing", "Belarus", "ENGLISH");
+
+    }
+
+    @Description("Поиск докладов по ключевому слову")
+    @DisplayName("Поиск докладов по ключевому слову")
+    @Test
+    public void searchingLecturesByKeyWord() throws InterruptedException {
+
+        new MainPage()
+                .getVideoPage()
+                .search("QA")
+                .cardsNonClickedValidation("QA");
+
+    }
+
+
+
+
+
+
 
 
 
