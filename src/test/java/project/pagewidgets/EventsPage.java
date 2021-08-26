@@ -33,11 +33,6 @@ public class EventsPage extends BasePage {
 
     SelenideElement eventCardLoader = $x("//div[@class='evnt-loader']");
 
-
-    public EventsPage(){
-        super();
-    }
-
     @Step("На странице отображаются карточки мероприятий")
     public EventsPage checkVisabilityOfEventsCards() {
         eventsList.first().shouldBe(visible);

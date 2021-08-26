@@ -6,16 +6,15 @@ import io.qameta.allure.Feature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import project.pagewidgets.EventTimeType;
 import project.pagewidgets.MainPage;
 
-
+@Execution(ExecutionMode.CONCURRENT)
 @Epic("Тесты проектной работы OTUS")
 @Feature("Тестирование сайта EPAM")
 public class EpamTest extends BaseHook {
-
-    @BeforeEach
-    public void setUp() {}
 
     @Description("Сравнение колличества карточек и счётчика мероприятий")
     @DisplayName("Просмотр предстоящих мероприятий")

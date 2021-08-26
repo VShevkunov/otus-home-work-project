@@ -1,6 +1,7 @@
 package project.pagewidgets;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -47,6 +48,7 @@ public class VideoPage extends BasePage {
         filtersHeading.$x(".//label[@data-value='" + filterName + "']").click();
         waitLoader();
         logger.info("Отфильтровано по {} - {}", filterType, filterName);
+        //filtersHeading.$x(".//label[@data-value='" + filterName + "']").pressEscape();
         return this;
     }
 
