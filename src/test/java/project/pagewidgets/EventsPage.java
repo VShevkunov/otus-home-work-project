@@ -120,9 +120,6 @@ public class EventsPage extends BasePage {
     }
 
 
-
-
-
     public void eventDateValidation(String date, EventTimeType switcher) {
 
         String d = date.trim(); //лишние пробелы за ошибку не считаем
@@ -131,7 +128,7 @@ public class EventsPage extends BasePage {
         formatter.setLenient(false); //не пропускать невалидные даты
 
         Date currentDate = null;     //текущая дата без времени 00:00:00 MSK
-        Date beginDate = null;      //дата начала (если есть)
+        Date beginDate;      //дата начала (если есть)
         Date lastDate = null;      //дата окончания  и основная дата, если мероприятие многодневное
 
         List<String> dates = Arrays.asList(d.split(" - "));

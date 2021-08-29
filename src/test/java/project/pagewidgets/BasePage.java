@@ -16,9 +16,9 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class BasePage {
+public abstract class BasePage {
 
-    public Logger logger = LogManager.getLogger(this.getClass());  //универсальный предок всех логеров
+    protected final Logger logger = LogManager.getLogger(this.getClass());  //универсальный предок всех логеров
 
     private SelenideElement header = $x("//div[@class='evnt-platform-header']"); //главная панель
     private By events = By.xpath(".//a[contains(text(), 'Events')]");
@@ -26,6 +26,8 @@ public class BasePage {
     private By video = By.xpath(".//a[contains(text(), 'Video')]");
     private By logo = By.xpath(".//a[@class='evnt-brand-logo']");
     private By login = By.xpath(".//a[contains(text(), 'Login')]");
+
+    private SelenideElement loader = $x("//div[@class='evnt-global-loader']");
 
     @Step("Пользователь переходит на вкладку events")
     public EventsPage getEventsPage() {
@@ -50,7 +52,7 @@ public class BasePage {
     }
 
     public void waitLoader() {
-        $x("//div[@class='evnt-global-loader']").shouldBe(disappear, Duration.ofSeconds(10));
+        loader.should(disappear, Duration.ofSeconds(10));
     }
 
 

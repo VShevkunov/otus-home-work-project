@@ -101,7 +101,9 @@
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <parallel>all</parallel>
+          <perCoreThreadCount>true</perCoreThreadCount>
           <threadCount>4</threadCount>
+          <perCoreThreadCount>false</perCoreThreadCount>
 <!--          <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>-->
 <!--          <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
 <!--          <threadCountMethods>4</threadCountMethods>-->

@@ -10,6 +10,8 @@ public class BaseHook {
     @BeforeAll
     public static void setUp() {
 
+        //Configuration.remote = "http://127.0.0.1:4444/wd/hub";
+
         //Создаём объект класса DesiredCapabilities, используется как настройка  вашей конфигурации с помощью пары ключ-значение
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", "chrome");
@@ -22,7 +24,7 @@ public class BaseHook {
         Configuration.baseUrl = "https://events.epam.com/";
 
         //Url удалённого веб драйвера
-        Configuration.remote = "http://localhost:4444/wd/hub";
+
         //Определяем какой браузер будем использовать
         //Configuration.browser = "Chrome";
         //Размер окна браузера
