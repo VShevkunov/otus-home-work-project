@@ -2,7 +2,6 @@ package project.pagewidgets;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.impl.Waiter;
 
 import static com.codeborne.selenide.Selenide.$x;
 

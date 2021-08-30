@@ -1,7 +1,6 @@
 package project.pagewidgets;
 
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -18,7 +17,6 @@ public class VideoPage extends BasePage {
 
     SelenideElement eventWrapper = $x("//div[@class='evnt-talks-wrapper']");
     ElementsCollection eventCards = $$x("//div[@class='evnt-talks-wrapper']//div[@class='evnt-card-table']");
-    //ElementsCollection eventCards = eventWrapper.$$x(".//div[@class='evnt-talk-card']");
     By eventTalkName = By.xpath(".//div[@class='evnt-talk-name']//span");
 
     @Step("На странице отображаются карточки соответствующие правилам выбранных фильтров")
@@ -69,7 +67,7 @@ public class VideoPage extends BasePage {
     }
 
     @Step("На странице отображаются доклады, содержащие в названии ключевое слово поиска")
-    public VideoPage cardsNonClickedValidation(String ...rules) throws InterruptedException {
+    public VideoPage cardsNonClickedValidation(String ...rules) {
 
         for (int i = 0; i < eventCards.size(); i++) {
 

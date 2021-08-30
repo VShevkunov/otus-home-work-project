@@ -3,7 +3,6 @@ package project;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -87,7 +86,7 @@ public class EpamTest extends BaseHook {
     @Description("Поиск докладов по ключевому слову")
     @DisplayName("Поиск докладов по ключевому слову")
     @Test
-    public void searchingLecturesByKeyWord() throws InterruptedException {
+    public void searchingLecturesByKeyWord() {
 
         new MainPage()
                 .getVideoPage()

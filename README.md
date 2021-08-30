@@ -1,3 +1,11 @@
+По-умолчанию, запуск локально, chrome последней версии, 4 потока:
+mvn clean test 
+
+Опциональные парметры запуска, выбор браузера, его версия, адрес хаба для запуска в docker:
+
+mvn -Dselenide.browser=firefox -Dselenide.browserVersion=90.0 -Dselenide.remote=http://localhost:4444/wd/hub clean test
+
+
 Проект
 Проектная работа от EPAM
 

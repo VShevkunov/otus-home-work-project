@@ -129,6 +129,16 @@
               <name>junit.jupiter.extensions.autodetection.enabled</name>
               <value>true</value>
             </property>
+<!--            <property>-->
+<!--              <name>browser</name>-->
+<!--              <value>${browser}</value>-->
+<!--              <default>chrome</default>-->
+<!--            </property>-->
+<!--            <property>-->
+<!--              <name>ver</name>-->
+<!--              <value>${ver}</value>-->
+<!--              <default>none</default>-->
+<!--            </property>-->
           </systemProperties>
           <reportFormat>plain</reportFormat>
         </configuration>

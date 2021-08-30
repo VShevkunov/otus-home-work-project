@@ -10,29 +10,21 @@ public class BaseHook {
     @BeforeAll
     public static void setUp() {
 
-        //Configuration.remote = "http://127.0.0.1:4444/wd/hub";
+        //Configuration.remote = "http://localhost:4444/wd/hub/";
 
-        //Создаём объект класса DesiredCapabilities, используется как настройка  вашей конфигурации с помощью пары ключ-значение
+        //Создаём объект класса DesiredCapabilities, используется как настройка конфигурации с помощью пары ключ-значение
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "chrome");
-        capabilities.setCapability("browserVersion", "92.0");
         //Включить поддержку отображения экрана браузера во время выполнения теста
         capabilities.setCapability("enableVNC", true);
         //Включение записи видео в процессе выполнения тестов
         capabilities.setCapability("enableVideo", true);
         capabilities.setCapability("enableLogs", true);
+
+        //Configuration.browser = "chrome";
+        //Configuration.browserVersion = "90.0";
         Configuration.baseUrl = "https://events.epam.com/";
-
-        //Url удалённого веб драйвера
-
-        //Определяем какой браузер будем использовать
-        //Configuration.browser = "Chrome";
-        //Размер окна браузера
         Configuration.browserSize = "1920x1080";
-
         Configuration.browserCapabilities = capabilities;
-
-        //Configuration.startMaximized = true;
         Configuration.timeout = 5000; //ms
 
     }
